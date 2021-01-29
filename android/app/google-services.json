@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "58967779943",
+    "project_id": "bhaadepay",
+    "storage_bucket": "bhaadepay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58967779943:android:a4a19b7cd1ff888f6942c2",
+        "android_client_info": {
+          "package_name": "com.example.bhaade_pay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58967779943-ae20tjshd885g4rbsbcjuf5sq4bpqrs2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5-RP9WeLPwrsFtO0yjjiHa_qE9UCrZD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58967779943-ae20tjshd885g4rbsbcjuf5sq4bpqrs2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
