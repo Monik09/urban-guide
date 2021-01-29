@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
+  String apiKey = "AIzaSyB5-RP9WeLPwrsFtO0yjjiHa_qE9UCrZD4";
   String _token;
   DateTime _expiryDate;
   String _userId;
@@ -33,7 +34,7 @@ class Auth with ChangeNotifier {
   Future<void> _authenticate(
       String email, String password, String urlSegment) async {
     final url =
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/$urlSegment?key=AIzaSyC13spCwP_f_SalxEbkB-wjedoF8iYENlQ';
+        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$apiKey';
     try {
       final response = await http.post(
         url,
@@ -75,11 +76,11 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> signup(String email, String password) async {
-    return _authenticate(email, password, 'signupNewUser');
+    return _authenticate(email, password, 'signUp');
   }
 
   Future<void> login(String email, String password) async {
-    return _authenticate(email, password, 'verifyPassword');
+    return _authenticate(email, password, 'signInWithPassword');
   }
 
   Future<bool> tryAutoLogin() async {
@@ -87,7 +88,8 @@ class Auth with ChangeNotifier {
     if (!prefs.containsKey('userData')) {
       return false;
     }
-    final extractedUserData = json.decode(prefs.getString('userData')) as Map<String, Object>;
+    final extractedUserData =
+        json.decode(prefs.getString('userData')) as Map<String, Object>;
     final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
 
     if (expiryDate.isBefore(DateTime.now())) {

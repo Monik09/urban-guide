@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 class MyHomePage extends StatefulWidget {
-  final String title="me";
+  final String title = "me";
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -33,10 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-          RaisedButton(onPressed: ()async{
-           await FirebaseAuth.instance.signOut();
-          },
-          child: Text("Logout"),)
+            RaisedButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+              },
+              child: Text("Logout"),
+            ),
           ],
         ),
       ),

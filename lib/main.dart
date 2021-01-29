@@ -1,3 +1,4 @@
+import 'package:bhaade_pay/start.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,16 @@ import './screens/user_products_screen.dart';
 import './screens/edit_product_screen.dart';
 import './screens/auth_screen.dart';
 import './helpers/custom_route.dart';
+import 'authentication_screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); 
-  runApp(MyApp());}
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-   final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth autho = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -32,57 +35,67 @@ class MyApp extends StatelessWidget {
           value: Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Products>(
-          create:null,
+          create: null,
           update: (ctx, auth, previousProducts) => Products(
-                auth.token,
-                auth.userId,
-                previousProducts == null ? [] : previousProducts.items,
-              ),
+            auth.token,
+            auth.userId,
+            previousProducts == null ? [] : previousProducts.items,
+          ),
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
-          create:null,
+          create: null,
           update: (ctx, auth, previousOrders) => Orders(
-                auth.token,
-                auth.userId,
-                previousOrders == null ? [] : previousOrders.orders,
-              ),
+            auth.token,
+            auth.userId,
+            previousOrders == null ? [] : previousOrders.orders,
+          ),
         ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
-              title: 'MyShop',
-              theme: ThemeData(
-                primarySwatch: Colors.purple,
-                accentColor: Colors.deepOrange,
-                fontFamily: 'Lato',
-                pageTransitionsTheme: PageTransitionsTheme(
-                  builders: {
-                    TargetPlatform.android: CustomPageTransitionBuilder(),
-                    TargetPlatform.iOS: CustomPageTransitionBuilder(),
-                  },
-                ),
-              ),
-              home: auth.isAuth
-                  ? ProductsOverviewScreen()
-                  : FutureBuilder(
-                      future: auth.tryAutoLogin(),
-                      builder: (ctx, authResultSnapshot) =>
-                          authResultSnapshot.connectionState ==
-                                  ConnectionState.waiting
-                              ? SplashScreen()
-                              : AuthScreen(),
-                    ),
-              routes: {
-                ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
-                CartScreen.routeName: (ctx) => CartScreen(),
-                OrdersScreen.routeName: (ctx) => OrdersScreen(),
-                UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
-                EditProductScreen.routeName: (ctx) => EditProductScreen(),
+          title: 'MyShop',
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+            accentColor: Colors.deepOrange,
+            fontFamily: 'Lato',
+            pageTransitionsTheme: PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: CustomPageTransitionBuilder(),
+                TargetPlatform.iOS: CustomPageTransitionBuilder(),
               },
             ),
+          ),
+          home: auth.isAuth
+              ? ProductsOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
+          // home: new StreamBuilder(
+          //   stream: autho.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.hasData) {
+          //       return ProductsOverviewScreen();
+          //     }
+          //     return AuthenticationScreen(); // MyHomePage(title: 'Flutter Demo Home Page'),
+          //   },
+          // ),
+
+          routes: {
+            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+            CartScreen.routeName: (ctx) => CartScreen(),
+            OrdersScreen.routeName: (ctx) => OrdersScreen(),
+            UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+            EditProductScreen.routeName: (ctx) => EditProductScreen(),
+          },
+        ),
       ),
     );
   }

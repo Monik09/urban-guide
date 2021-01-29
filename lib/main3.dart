@@ -37,12 +37,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (BuildContext context) => new MyHomePage(),
         '/login': (BuildContext context) => new AuthenticationScreen(),
-          ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
-          CartScreen.routeName: (ctx) => CartScreen(),
-          OrdersScreen.routeName: (ctx) => OrdersScreen(),
-          ManageOrdersScreen.routeName: (ctx) => ManageOrdersScreen(),
-          EditProductScreen.routeName: (ctx) => EditProductScreen(),
-
+        ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
+        CartScreen.routeName: (ctx) => CartScreen(),
+        OrdersScreen.routeName: (ctx) => OrdersScreen(),
+        ManageOrdersScreen.routeName: (ctx) => ManageOrdersScreen(),
+        EditProductScreen.routeName: (ctx) => EditProductScreen(),
       },
     );
   }
