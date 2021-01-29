@@ -12,9 +12,22 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: <Widget>[
-          AppBar(
-            title: Text('Hello Friend!'),
-            automaticallyImplyLeading: false,
+          // AppBar(
+          //   title: Text('Hello Friend!'),
+          //   automaticallyImplyLeading: false,
+          // ),
+          UserAccountsDrawerHeader(
+            accountName: Text("Ashish Rawat"),
+            accountEmail: Text("ashishrawat2911@gmail.com"),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Theme.of(context).platform == TargetPlatform.iOS
+                  ? Colors.blue
+                  : Colors.white,
+              child: Text(
+                "A",
+                style: TextStyle(fontSize: 40.0),
+              ),
+            ),
           ),
           Divider(),
           ListTile(

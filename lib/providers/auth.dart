@@ -75,7 +75,12 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> signup(String email, String password) async {
+  Future<void> signup(String email, String password, String name) async {
+    final url =
+        'https://bhaadepay-default-rtdb.firebaseio.com/users/$userId.json?auth=${_token}';
+    try {
+      final reponse = await http.post(url, body: json.encode({value}));
+    } catch (e) {}
     return _authenticate(email, password, 'signUp');
   }
 
